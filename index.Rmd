@@ -1,12 +1,8 @@
 ---
 title: "Rachel"
 description: |
-  Welcome to the website. I hope you enjoy terrible jokes!
+  Welcome to the website. I hope you enjoy terrible jokes.
 site: distill::distill_website
-
-navbar:
-  left:
-  - text: Home
 ---
 
 ```{r setup, include=FALSE}
