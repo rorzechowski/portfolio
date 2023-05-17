@@ -1,7 +1,7 @@
 ---
 title: "Rachel"
 description: |
-  Welcome to the website. I hope you enjoy terrible jokes.
+  Welcome to the website. I hope you enjoy terrible jokes and bad puns.
 site: distill::distill_website
 ---
 
