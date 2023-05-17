@@ -5,7 +5,7 @@ description: |
 site: distill::distill_website
 
 navbar:
-  right:
+  left:
   - text: Home
 ---
 
