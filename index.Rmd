@@ -3,6 +3,12 @@ title: "Rachel"
 description: |
   Welcome to the website. I hope you enjoy terrible jokes and bad puns.
 site: distill::distill_website
+
+navbar:
+  logo:
+    image: images/logo.png
+    href: https://www.rstudio.com
+  search: true
 ---
 
 ```{r setup, include=FALSE}
