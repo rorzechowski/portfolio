@@ -2,6 +2,7 @@
 title: "Rachel Orzechowski"
 description: |
   Hello and welcome- Let's learn together!
+image: "images/portfolio_possum.jpg"
 site: distill::distill_website
 
 navbar:
