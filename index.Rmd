@@ -1,6 +1,6 @@
 ---
 title: "Rachel Orzechowski"
-image: "portfolio_pig.jpg"
+image: "images/portfolio_pig.jpg"
 links:
   - label: Resume
     url: "https://linkedin.com/"
