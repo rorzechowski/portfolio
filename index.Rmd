@@ -1,36 +1,34 @@
 ---
 title: "Rachel Orzechowski"
-image: "images/portfolio_pig.jpg"
+image: "/images/portfolio_pig.jpg"
 links:
   - label: Resume
-    url: "https://linkedin.com/"
-  - label: Blog
-    url: "https://medium.com/"
-  - label: SoundCloud
-    url: "https://soundcloud.com/"
-  - label: Twitter
-    url: "https://twitter.com/"
+    url: 
+  - label: Linkedin
+    url: "https://www.linkedin.com/in/rachel-orzechowski-25736a93"
+  - label: GitHub
+    url: "https://github.com/rorzechowski"
+  - label: Work Bio
+    url: "https://www.glerl.noaa.gov/about/pers/profiles/orzechowski.html"
+
 output:
   postcards::solana
 ---
  
 ## Bio
 
-Sigríður Björndotter is a musician, vocalist, and live entertainment consultant
-living in Buenos Aires, Argentina. Her writing has appeared in Rolling Stone,
-Billboard, and NME, and she is a frequent contributor to National Public Radio's 
-*All Songs Considered*. She has been raising Pembroke Welsh Corgis since the age
-of six, and she has collected Casio watches since the age of ten.
+Coming Soon to a Theater Near You
 
 ## Education
 
-**INSEAD** | Fontainebleau, France
+**Grand Valley State University** | Allendale, Michigan
 
-M.B.A. | August 2014 - June 2015
+M.Sc. | August 2022 - June 2025
 
-**The Juilliard School** | New York, NY
+**Grand Valley State University** | Allendale, Michigan
 
-B.F.A. in Music Performance | August 2005 - May 2009
+B.S. | Jan 2016 - May 2019
+
 
 ## Experience
 
