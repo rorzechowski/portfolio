@@ -1,6 +1,6 @@
 name: "portfolio"
 title: "The Caffeinated Cavy"
-image: "/images/portfolio_pig.jpg"
+image: images/portfolio_pig.jpg
 navbar:
   right:
     - text: "About"
@@ -24,5 +24,5 @@ navbar:
         - text: "Videos"
           href: video_list.html
     - icon: fas fa-microscope
-      href: https://github.com/rstudio/distill
+      href: https://github.com/rorzechowski
 output: distill::distill_article
