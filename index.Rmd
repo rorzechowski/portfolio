@@ -16,4 +16,4 @@ site: distill::distill_website
 ---
  
 I am an aquatic ecologist specializing in dreissenid mussels based in the Great Lakes region. 
-Currently I work with the Elgin Lab as a NOAA Affiliate. I enjoy hiking, camping, and drinking too much coffee. 
+Currently, I work with the Elgin Lab as a NOAA Affiliate research assistant. I enjoy hiking, camping, and drinking too much coffee. 
