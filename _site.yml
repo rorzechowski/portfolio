@@ -19,7 +19,7 @@ navbar:
           href: blog_list.html
         - text: "Books"
           href: book_list.html
-        - text: "Videos"
+        - text: "Binge Watch"
           href: video_list.html
     - text: "Gallery"
       href: photo_gallery.html

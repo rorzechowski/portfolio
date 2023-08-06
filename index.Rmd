@@ -9,7 +9,7 @@ links:
   - label: GitHub
     url: "https://github.com/rorzechowski"
   - label: Email
-    url: "rachel.orzechowski@noaa.gov"
+    url: "mailto:rachel.orzechowski@noaa.gov"
 output:
   postcards::jolla
 site: distill::distill_website
@@ -17,3 +17,10 @@ site: distill::distill_website
  
 I am an aquatic ecologist specializing in dreissenid mussels based in the Great Lakes region. 
 Currently, I work with the Elgin Lab as a NOAA Affiliate research assistant. I enjoy hiking, camping, and drinking too much coffee. 
+
+- Navigate through the site to see <a href="https://rorzechowski.github.io/portfolio/current_projects.html">current</a> and <a href="https://rorzechowski.github.io/portfolio/past_projects.html">past</a> projects and topics that I have worked on. 
+- Utilize the Resources button for helpful <a href="https://rorzechowski.github.io/portfolio/blog_list.html">blogs</a>, <a href="https://rorzechowski.github.io/portfolio/book_list.html">books</a>, or <a href="https://rorzechowski.github.io/portfolio/video_list.html">binge watch</a> videos to expand your knowledge on statistics, data science, the R programming language, and more. 
+- Peruse the <a href="https://rorzechowski.github.io/portfolio/photo_gallery.html">photo gallery</a> to see what a career as a research scientist might look like. 
+
+### Want More?
+#### Click a button below
