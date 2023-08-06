@@ -15,6 +15,5 @@ output:
 site: distill::distill_website
 ---
  
-I am a classically trained data scientist living in the San Francisco Bay Area. 
-Currently I work on the Oculus team at Facebook. I love talking about baseball, 
-true crime podcasts, and causal inference.
+I am an aquatic ecologist specializing in dreissenid mussels based in the Great Lakes region. 
+Currently I work with the Elgin Lab as a NOAA Affiliate. I enjoy hiking, camping, and drinking too much coffee. 

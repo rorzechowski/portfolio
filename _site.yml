@@ -7,6 +7,20 @@ navbar:
   right:
     - text: "Home"
       href: index.html
-    - text: "About"
-      href: about.html
+    - text: "Projects"
+      menu:
+        - text: "Current"
+          href: current_projects.html
+        - text: "Past"
+          href: past_projects.html
+    - text: "Resources"
+      menu:
+        - text: "Blogs"
+          href: blog_list.html
+        - text: "Books"
+          href: book_list.html
+        - text: "Videos"
+          href: video_list.html
+    - text: "Gallery"
+      href: photo_gallery.html
 output: distill::distill_article
