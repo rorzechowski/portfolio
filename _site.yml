@@ -23,4 +23,6 @@ navbar:
           href: video_list.html
     - text: "Gallery"
       href: photo_gallery.html
+    - icon: fab fa-orcid
+      href: https://orcid.org/0000-0001-5683-7588
 output: distill::distill_article
