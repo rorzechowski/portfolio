@@ -1,18 +1,17 @@
 ---
-title: "Rachel Orzechowski"
-image: "/images/portfolio_pig.jpg"
+title: "The Caffeinated Cavy"
+image: images/portfolio_pig.jpg
 links:
-  - label: Resume
-    url: 
-  - label: Linkedin
+  - label: LinkedIn
     url: "https://www.linkedin.com/in/rachel-orzechowski-25736a93"
+  - label: NOAA
+    url: "https://www.glerl.noaa.gov/about/pers/profiles/orzechowski.html"
   - label: GitHub
     url: "https://github.com/rorzechowski"
-  - label: Work Bio
-    url: "https://www.glerl.noaa.gov/about/pers/profiles/orzechowski.html"
-
+  - label: Email
+    url: "rachel.orzechowski@noaa.gov"
 output:
-  postcards::solana
+  postcards::jolla
 ---
  
 ## Bio
