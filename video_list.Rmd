@@ -1,0 +1,17 @@
+---
+title: "Videos"
+description: |
+  Helpful videos on topics including statistics, R tuturials, and more!
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Coming Soon...
+
+
+
+
+

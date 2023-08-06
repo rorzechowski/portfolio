@@ -1,0 +1,17 @@
+---
+title: "Blogs"
+description: |
+  Creative blogs from insightful people in the R community.
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Coming Soon...
+
+
+
+
+
