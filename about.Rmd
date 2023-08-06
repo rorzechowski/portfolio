@@ -1,46 +1,10 @@
 ---
-title: "The Caffeinated Cavy"
-image: images/portfolio_pig.jpg
-links:
-  - label: LinkedIn
-    url: "https://www.linkedin.com/in/rachel-orzechowski-25736a93"
-  - label: NOAA
-    url: "https://www.glerl.noaa.gov/about/pers/profiles/orzechowski.html"
-  - label: GitHub
-    url: "https://github.com/rorzechowski"
-  - label: Email
-    url: "rachel.orzechowski@noaa.gov"
-output:
-  postcards::jolla
+title: "About this site"
+description: |
+  Some additional details about the website
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Bio
-
-Coming Soon to a Theater Near You
-
-## Education
-
-**Grand Valley State University** | Allendale, Michigan
-
-M.Sc. | August 2022 - June 2025
-
-**Grand Valley State University** | Allendale, Michigan
-
-B.S. | Jan 2016 - May 2019
-
-
-## Experience
-
-**Freelance** | Live Entertainment Consultant | August 2018 - Present
-
-**Cercle** | Producer | August 2018 - Present
-
-**National Public Radio** | Producer | May 2015 - July 2018
-
-**NME Magazine** | Editor | July 2014 - July 2016
-
-**Iceland Symphony Orchestra** | Cellist | October 2009 - June 2014
