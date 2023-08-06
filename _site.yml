@@ -1,6 +1,7 @@
 name: "portfolio"
 title: "The Caffeinated Cavy"
 image: images/portfolio_pig.jpg
+output_dir: "docs"
 navbar:
   right:
     - text: "About"
