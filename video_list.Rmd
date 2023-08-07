@@ -9,9 +9,11 @@ output: distill::distill_article
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Coming Soon...
+[StatQuest with Josh Starmer](https://www.youtube.com/@statquest/playlists)  
+**Clearly explained statistical topics**
 
+[Jenny Sloane](https://www.youtube.com/@jennysloane/playlists)  
+**Easy to follow `distill` tutorials**
 
-
-
-
+[Data Science Analytics](https://www.youtube.com/@datascienceanalytics1826/playlists)  
+**Authors of ISLR covering various topics in their book**

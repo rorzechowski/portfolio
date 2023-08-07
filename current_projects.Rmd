@@ -1,16 +1,131 @@
 ---
 title: "Current Projects"
 description: |
-  A recap of topics covered in STA 631 - Summer 2023
+  A reflection of topics covered in STA 631 - Summer 2023
 output: distill::distill_article
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-# Course Objectives
+## Course Objective 1
+#### Describe probability as a foundation of statistical modeling, including inference and maximum likelihood estimation
+
+*From Activity 6 - Logistic Regression*
+
+```{r chunk1}
+#load library
+library(tidyverse)
+library(tidymodels)
+```
+
+```{r chunk2}
+#read in data from URL
+resume <- read_csv("https://www.openintro.org/data/csv/resume.csv")
+```
+
+```{r chunk3}
+#coerce variable of interest to binary
+resume$received_callback <- factor(resume$received_callback)
+```
+
+```{r chunk4}
+# probability of getting a callback
+prob_yes = 392/4870
+prob_yes
+
+odds_yes = (prob_yes/ (1-prob_yes))
+odds_yes
+```
+
+**Logistic Regression**
+```{r}
+resume_mod <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(received_callback ~ race, data = resume, family = "binomial")
+
+tidy(resume_mod) %>% 
+  knitr::kable(digits = 3)
+```
+
+```{r}
+#log odds of perceived black person getting callback
+log_odds_callback = -2.68
+
+odds_callback = exp(log_odds_callback)
+odds_callback
+```
+
+## Discussion & Reflection
+
+
+
+
+
+
+---
+
+## Course Objective 2
+#### Determine and apply the appropriate generalized linear model for a specific data context
+
+*From Mini Competition 2*
+
+
+
+
+
+
+
+
+## Discussion & Reflection
+
+
+
+
+
+---
+
+## Course Objective 3
+#### Conduct model selection for a set of candidate models
+
+*From Mini Competition 1*
+
+
+
+
+
+
+## Discussion & Reflection
+
+
+
+---
+
+## Course Objective 4
+#### Communicate the results of statistical models to a general audience
+
+*From Mini Competition 2 - see code above*
+
+## Discussion & Reflection
+
+
+
+
+
+
+
+
+---
+
+## Course Objective 5
+#### Use programming software (i.e., R) to fit and assess statistical models
+
+*See above for examples of R code*
+
+## Discussion & Reflection
+
 
 
 

@@ -13,24 +13,24 @@
       "title": "Blogs",
       "description": "Creative blogs from insightful people in the R community.\n",
       "author": [],
-      "contents": "\r\nComing Soon…\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-08-06T03:00:42-04:00"
+      "contents": "\r\nLisa LendwayGreat posts with intro to R courses, building an R Markdown site, and tutorials on GitHub\r\nTed LaderasMostly bioinformatics teaching, but has posts about many topics ranging from mental health to R courses\r\nAlison HillGood advanced R Markdown workshop as well as other fun data sets\r\nAllison HorstAmazing illustrations about many data science topics\r\n\r\n\r\n\r\n",
+      "last_modified": "2023-08-06T23:09:49-04:00"
     },
     {
       "path": "book_list.html",
       "title": "Library of Learning",
       "description": "Helpful books on a wide variety of topics. \n",
       "author": [],
-      "contents": "\r\nComing Soon…\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-08-06T03:00:52-04:00"
+      "contents": "\r\nData Feminism by Catherine D’Ignazio and Lauren Klein- A powerful book illustrating the historic challenges associated with data science and adapting a new way of framing data visualization techniques in a feminist way.\r\nAn Introduction to Statistical Learning by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani- Textbook read during STA 631. Covers topics such as linear regression, classification, and more. \r\n\r\n\r\n\r\n",
+      "last_modified": "2023-08-06T22:57:43-04:00"
     },
     {
       "path": "current_projects.html",
       "title": "Current Projects",
-      "description": "A recap of topics covered in STA 631 - Summer 2023\n",
+      "description": "A reflection of topics covered in STA 631 - Summer 2023\n",
       "author": [],
-      "contents": "\r\nCourse Objectives\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-08-06T02:46:27-04:00"
+      "contents": "\r\nCourse Objective 1\r\nDescribe probability as a foundation of statistical modeling, including inference and maximum likelihood estimation\r\nFrom Activity 6 - Logistic Regression\r\n\r\n\r\n#load library\r\nlibrary(tidyverse)\r\nlibrary(tidymodels)\r\n\r\n\r\n\r\n\r\n#read in data from URL\r\nresume <- read_csv(\"https://www.openintro.org/data/csv/resume.csv\")\r\n\r\n\r\n\r\n\r\n#coerce variable of interest to binary\r\nresume$received_callback <- factor(resume$received_callback)\r\n\r\n\r\n\r\n\r\n# probability of getting a callback\r\nprob_yes = 392/4870\r\nprob_yes\r\n\r\n[1] 0.08049281\r\n\r\nodds_yes = (prob_yes/ (1-prob_yes))\r\nodds_yes\r\n\r\n[1] 0.08753908\r\n\r\nLogistic Regression\r\n\r\n\r\nresume_mod <- logistic_reg() %>%\r\n  set_engine(\"glm\") %>%\r\n  fit(received_callback ~ race, data = resume, family = \"binomial\")\r\n\r\ntidy(resume_mod) %>% \r\n  knitr::kable(digits = 3)\r\n\r\nterm\r\nestimate\r\nstd.error\r\nstatistic\r\np.value\r\n(Intercept)\r\n-2.675\r\n0.083\r\n-32.417\r\n0\r\nracewhite\r\n0.438\r\n0.107\r\n4.083\r\n0\r\n\r\n\r\n\r\n#log odds of perceived black person getting callback\r\nlog_odds_callback = -2.68\r\n\r\nodds_callback = exp(log_odds_callback)\r\nodds_callback\r\n\r\n[1] 0.06856315\r\n\r\nDiscussion & Reflection\r\nCourse Objective 2\r\nDetermine and apply the appropriate generalized linear model for a specific data context\r\nFrom Mini Competition 2\r\nDiscussion & Reflection\r\nCourse Objective 3\r\nConduct model selection for a set of candidate models\r\nFrom Mini Competition 1\r\nDiscussion & Reflection\r\nCourse Objective 4\r\nCommunicate the results of statistical models to a general audience\r\nFrom Mini Competition 2 - see code above\r\nDiscussion & Reflection\r\nCourse Objective 5\r\nUse programming software (i.e., R) to fit and assess statistical models\r\nSee above for examples of R code\r\nDiscussion & Reflection\r\n\r\n\r\n\r\n",
+      "last_modified": "2023-08-06T22:47:26-04:00"
     },
     {
       "path": "index.html",
@@ -52,16 +52,16 @@
       "title": "Photo Gallery",
       "description": "Photos from past projects\n",
       "author": [],
-      "contents": "\r\nComing Soon…\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-08-06T02:58:00-04:00"
+      "contents": "\r\nComing Soon…\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+      "last_modified": "2023-08-06T23:35:57-04:00"
     },
     {
       "path": "video_list.html",
       "title": "Videos",
       "description": "Helpful videos on topics including statistics, R tuturials, and more!\n",
       "author": [],
-      "contents": "\r\nComing Soon…\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-08-06T03:01:01-04:00"
+      "contents": "\r\nStatQuest with Josh StarmerClearly explained statistical topics\r\nJenny SloaneEasy to follow distill tutorials\r\nData Science AnalyticsAuthors of ISLR covering various topics in their book\r\n\r\n\r\n\r\n",
+      "last_modified": "2023-08-06T23:33:02-04:00"
     }
   ],
   "collections": []

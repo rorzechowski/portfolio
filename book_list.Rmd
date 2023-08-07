@@ -9,8 +9,11 @@ output: distill::distill_article
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Coming Soon...
+[Data Feminism](https://data-feminism.mitpress.mit.edu/) by Catherine D'Ignazio and Lauren Klein  
+**A powerful book illustrating the historic challenges associated with data science and adapting a new way of framing data visualization techniques in a feminist way.**
 
+[An Introduction to Statistical Learning](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf) by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani  
+**Textbook read during STA 631. Covers topics such as linear regression, classification, and more. **
 
 
 

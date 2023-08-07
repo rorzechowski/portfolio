@@ -90,27 +90,27 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_meta_tags-->
   <title>The Caffeinated Cavy: Current Projects</title>
 
-  <meta property="description" itemprop="description" content="A recap of topics covered in STA 631- Summer 2023"/>
+  <meta property="description" itemprop="description" content="A reflection of topics covered in STA 631 - Summer 2023"/>
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="The Caffeinated Cavy: Current Projects"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="A recap of topics covered in STA 631- Summer 2023"/>
+  <meta property="og:description" content="A reflection of topics covered in STA 631 - Summer 2023"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="The Caffeinated Cavy"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
   <meta property="twitter:title" content="The Caffeinated Cavy: Current Projects"/>
-  <meta property="twitter:description" content="A recap of topics covered in STA 631- Summer 2023"/>
+  <meta property="twitter:description" content="A reflection of topics covered in STA 631 - Summer 2023"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Current Projects"]},{"type":"character","attributes":{},"value":["A recap of topics covered in STA 631- Summer 2023\n"]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Current Projects"]},{"type":"character","attributes":{},"value":["A reflection of topics covered in STA 631 - Summer 2023\n"]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2094,7 +2094,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Current Projects","description":"A recap of topics covered in STA 631- Summer 2023","authors":[]}
+{"title":"Current Projects","description":"A reflection of topics covered in STA 631 - Summer 2023","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2126,10 +2126,13 @@ Resources
 <div class="nav-dropdown-content">
 <a href="blog_list.html">Blogs</a>
 <a href="book_list.html">Books</a>
-<a href="video_list.html">Videos</a>
+<a href="video_list.html">Binge Watch</a>
 </div>
 </div>
 <a href="photo_gallery.html">Gallery</a>
+<a href="https://orcid.org/0000-0001-5683-7588">
+<i class="fab fa-orcid" aria-hidden="true"></i>
+</a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
 </nav>
@@ -2142,13 +2145,116 @@ Resources
 <h1>Current Projects</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>A recap of topics covered in STA 631- Summer 2023</p></p>
+<p><p>A reflection of topics covered in STA 631 - Summer 2023</p></p>
 </div>
 
 
 <div class="d-article">
-<h1 id="course-objectives">Course Objectives</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="course-objective-1">Course Objective 1</h2>
+<h4 id="describe-probability-as-a-foundation-of-statistical-modeling-including-inference-and-maximum-likelihood-estimation">Describe probability as a foundation of statistical modeling, including inference and maximum likelihood estimation</h4>
+<p><em>From Activity 6 - Logistic Regression</em></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#load library</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidymodels.tidymodels.org'>tidymodels</a></span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#read in data from URL</span></span>
+<span><span class='va'>resume</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"https://www.openintro.org/data/csv/resume.csv"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#coerce variable of interest to binary</span></span>
+<span><span class='va'>resume</span><span class='op'>$</span><span class='va'>received_callback</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>resume</span><span class='op'>$</span><span class='va'>received_callback</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># probability of getting a callback</span></span>
+<span><span class='va'>prob_yes</span> <span class='op'>=</span> <span class='fl'>392</span><span class='op'>/</span><span class='fl'>4870</span></span>
+<span><span class='va'>prob_yes</span></span></code></pre>
+</div>
+<pre><code>[1] 0.08049281</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>odds_yes</span> <span class='op'>=</span> <span class='op'>(</span><span class='va'>prob_yes</span><span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='va'>prob_yes</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>odds_yes</span></span></code></pre>
+</div>
+<pre><code>[1] 0.08753908</code></pre>
+</div>
+<strong>Logistic Regression</strong>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>resume_mod</span> <span class='op'>&lt;-</span> <span class='fu'>logistic_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"glm"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'>fit</span><span class='op'>(</span><span class='va'>received_callback</span> <span class='op'>~</span> <span class='va'>race</span>, data <span class='op'>=</span> <span class='va'>resume</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>tidy</span><span class='op'>(</span><span class='va'>resume_mod</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-2.675</td>
+<td style="text-align: right;">0.083</td>
+<td style="text-align: right;">-32.417</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">racewhite</td>
+<td style="text-align: right;">0.438</td>
+<td style="text-align: right;">0.107</td>
+<td style="text-align: right;">4.083</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#log odds of perceived black person getting callback</span></span>
+<span><span class='va'>log_odds_callback</span> <span class='op'>=</span> <span class='op'>-</span><span class='fl'>2.68</span></span>
+<span></span>
+<span><span class='va'>odds_callback</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>log_odds_callback</span><span class='op'>)</span></span>
+<span><span class='va'>odds_callback</span></span></code></pre>
+</div>
+<pre><code>[1] 0.06856315</code></pre>
+</div>
+<h2 id="discussion-reflection">Discussion &amp; Reflection</h2>
+<hr />
+<h2 id="course-objective-2">Course Objective 2</h2>
+<h4 id="determine-and-apply-the-appropriate-generalized-linear-model-for-a-specific-data-context">Determine and apply the appropriate generalized linear model for a specific data context</h4>
+<p><em>From Mini Competition 2</em></p>
+<h2 id="discussion-reflection-1">Discussion &amp; Reflection</h2>
+<hr />
+<h2 id="course-objective-3">Course Objective 3</h2>
+<h4 id="conduct-model-selection-for-a-set-of-candidate-models">Conduct model selection for a set of candidate models</h4>
+<p><em>From Mini Competition 1</em></p>
+<h2 id="discussion-reflection-2">Discussion &amp; Reflection</h2>
+<hr />
+<h2 id="course-objective-4">Course Objective 4</h2>
+<h4 id="communicate-the-results-of-statistical-models-to-a-general-audience">Communicate the results of statistical models to a general audience</h4>
+<p><em>From Mini Competition 2 - see code above</em></p>
+<h2 id="discussion-reflection-3">Discussion &amp; Reflection</h2>
+<hr />
+<h2 id="course-objective-5">Course Objective 5</h2>
+<h4 id="use-programming-software-i.e.-r-to-fit-and-assess-statistical-models">Use programming software (i.e., R) to fit and assess statistical models</h4>
+<p><em>See above for examples of R code</em></p>
+<h2 id="discussion-reflection-4">Discussion &amp; Reflection</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

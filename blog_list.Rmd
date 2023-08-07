@@ -9,9 +9,15 @@ output: distill::distill_article
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Coming Soon...
+[Lisa Lendway](https://lisalendway.netlify.app/)  
+**Great posts with intro to R courses, building an R Markdown site, and tutorials on GitHub**
 
+[Ted Laderas](https://laderast.github.io/)  
+**Mostly bioinformatics teaching, but has posts about many topics ranging from mental health to R courses**
 
+[Alison Hill](https://apreshill.com)  
+**Good advanced R Markdown workshop as well as other fun data sets**
 
-
+[Allison Horst](https://allisonhorst.com/)  
+**Amazing illustrations about many data science topics**
 
