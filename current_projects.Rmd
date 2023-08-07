@@ -221,11 +221,7 @@ accuracy2 #2% accuracy
 ## Discussion & Reflection
 Mini competition 2 set the goal to create a model to complete the task of projecting a company’s sales of widgets and then communicate our findings to a general audience. In this example, we utilized a generalized linear model approach to accomplish this task and framed the output in terms of months of projected high sales. This way, the company was able to use our predictions to choose which widgets should be kept in excess stock during specific months. One of the main goals of this assignment was to intentionally frame the output and predictions in a manner that is easily digestible to people who are not formally trained in statistics. A challenge of this goal was to strike a balance between effective communication without condescension- this is often a critique which non-academics have with academia. 
 
-One problem with our approach to the generalized linear model was with our training and testing models. While we randomized the dataset and split our data into a 70:30 training and testing sets, this ignores the collinearity of the data. For example, it is possible that one widget over multiple months could have been selected for either the training or testing sets. To ensure an even separation of widgets, a better approach would have been to select by unique widget and then subset the data. 
-
-
-
-
+One problem with our approach to the generalized linear model was with our training and testing models. While we randomized the dataset and split our data into a 70:30 training and testing sets, this ignores the collinearity of the data. For example, it is possible that one widget over multiple months could have been selected for either the training or testing sets. To ensure an even separation of widgets, a better approach would have been to select by unique widget and then subset the data. This project stretched my thinking about a problem, not only in what approach to use, but also how to effectively communicate the findings to a general audience
 
 ---
 
@@ -234,10 +230,55 @@ One problem with our approach to the generalized linear model was with our train
 
 *From Mini Competition 1*
 
+**Final models**
+The final model chosen after the backward selection using p values was as shown below 
+```{r}
+final_model1 <- lm_spec %>% 
+fit(SEGRADES ~ FSSPORTX+FSATCNFN+FHCHECKX+FHHELP+FSMTNG*FHHELP+FSMTNG+FSCOMMTE+SCCHOICE+FHPLACE, data = data_train)
 
+tidy(final_model1)
+```
 
+The final model chosen after the backward selection using AIC values was as shown below 
 
+```{r}
+final_model2 <- lm_spec %>% 
+fit(SEGRADES ~ FSSPORTX+FSATCNFN+FHCHECKX+FHHELP+FSMTNG*FHHELP+FSMTNG+FSCOMMTE+SCCHOICE+FHPLACE+FSFUNDRS, data = data_train)
 
+ tidy(final_model2)
+```
+
+## Making  predictions and check for accuracy of predictions
+
+Using the two final models from the backward selection to make predictions on the test data and determine their accuracy on predicting student grades
+
+**final_model1**
+```{r}
+predictions <- predict(final_model1, new_data = data_test)
+```
+
+And then checked the accuracy of the  predictions
+```{r}
+true_labels <- data_test$SEGRADES
+predictions_round <- round(predictions)# rounding to get whole numbers instea of decimals
+accuracy1 <- sum(predictions_round == true_labels) / length(true_labels)
+accuracy1
+```
+
+**final_model2**
+Using final model using backward selection and AIC to make predictions on the test data
+
+```{r}
+predictions2 <- predict(final_model2, new_data = data_test)
+```
+
+And then checked the accuracy of the  predictions
+```{r}
+true_labels <- data_test$SEGRADES
+predictions2_round <- round(predictions2)
+accuracy2 <- sum(predictions2_round == true_labels) / length(true_labels)
+accuracy2
+```
 
 ## Discussion & Reflection
 
@@ -250,14 +291,19 @@ One problem with our approach to the generalized linear model was with our train
 
 *From Mini Competition 2 - see code above*
 
+```{r fig.cap="Graph illustrating predictions in sales", out.extra="class=external"}
+knitr::include_graphics("images/comp2_graph.jpg")
+```
+
+```{r fig.cap="Communicating findings to our audience", out.extra="class=external"}
+knitr::include_graphics("images/comp2.jpg")
+```
+
 ## Discussion & Reflection
 
+As mentioned above, a main goal of this project was to use a model to predict sales of products, then communicate those predictions to a general audience. While I was not the one to give the presentation, I did play a major role in the development of the models as well as creating the presentation. It was difficult to find a balance between effectively and accurately communicating what was done, why it was done, and how it was done in a manner that makes sense to non-statisticians. This is something that I know I struggle with, as I tend to drone and give too many unimportant details when storytelling. Working on this assignment in a group helped me to see the level of effective communication that can occur, even with complicated topics. 
 
-
-
-
-
-
+Additionally, seeing other groups present their information and how they approached the assignment was equally insightful. One group in particular, I recall had the most visually impactful presentation and looked incredibly professional. I felt that they did a great job communicating their work in an effective way, without diminishing their own efforts or demeaning their audience. 
 
 ---
 
@@ -268,7 +314,9 @@ One problem with our approach to the generalized linear model was with our train
 
 ## Discussion & Reflection
 
+Between the multiple assignments and mini competitions in this class, we used R for all analyses. I am constantly amazed at the growth in this language that I continue to develop during my studies. The books, videos, and lectures all taught me new skills in R and these are tools which I will take with me as my career progresses. The amount of effort in this course to succeed was self-driven. In my opinion, these topics are of the sort that one will continue to learn new ways to approach them, so the code that I write today will be very different from the code I write in the future. Additionally, working on the mini competitions with other people helped me see how other people attack a problem in R, starting with how the clean the data, organize their code, and make final interpretations. Reading other people's code helped me to realize how I struggle with comments in my own code and how I need to improve on that aspect. 
 
+Overall, this class was a lot to keep up with between readings, videos, and assignments, but I believe that I have the tools to continue my learning journey from here. I particularly enjoyed many of the in-class discussions with my peers - we all come from such different backgrounds in studies and life that it was insightful to hear different perspectives on various topics such as AI, data feminism, or career aspirations. Sometimes it's easy to feel alone on your own journey, so I think finding common ground among your peers is important and brings a sense of community into your life. 
 
 
 
