@@ -9,11 +9,23 @@ output: distill::distill_article
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Coming Soon...
 
-```{r}
-knitr::include_graphics("images/portfolio_possum.jpg")
+```{r fig.cap="Macrophyte survey in Muskegon Lake", out.extra="class=external"}
+knitr::include_graphics("images/Macrophyte year 4 NE and Heritage 029_sharpened.png")
 ```
 
+```{r fig.cap="Dreissena bugensis siphons", out.extra="class=external"}
+knitr::include_graphics("images/mussel_siphons.jpg")
+```
 
+```{r fig.cap="Stenacron spp. under a microscope", out.extra="class=external"}
+knitr::include_graphics("images/Stenacron.jpg")
+```
 
+```{r fig.cap="Canadian Coast Guard vessel Limnos", out.extra="class=external"}
+knitr::include_graphics("images/ccg_limnos.jpg")
+```
+
+```{r fig.cap="Night shift on the CCG Limnos", out.extra="class=external"}
+knitr::include_graphics("images/rachel_limnos.jpg")
+```
