@@ -72,14 +72,156 @@ odds_callback
 
 *From Mini Competition 2*
 
+```{r}
+library(tidyverse)
+raw_data <- read_csv("inventory.csv")
+```
 
 
+#convert week data by month #easier for interpretation
+```{r}
+data_month <- raw_data %>% mutate(Month = case_when(week <= 4 ~ 'July',
+                                                    week > 4 & week <= 8 ~ 'August',
+                                                    week > 8 & week <= 12 ~ 'September',
+                                                    week > 12 & week <= 16 ~ 'October',
+                                                    week > 16 & week <= 20 ~ 'November',
+                                                    week > 20 & week <= 24 ~ 'December',
+                                                    week > 24 & week <= 28 ~ 'January',
+                                                    week > 28 & week <= 32 ~ 'February',
+                                                    week > 32 & week <= 37 ~ 'March',
+                                                    week > 37 & week <= 41 ~ 'April',
+                                                    week > 41 & week <= 45 ~ 'May',
+                                                    week > 45 & week <= 50 ~ 'June',
+                                                    week > 50 & week <= 53 ~ 'July2',))
+
+data_month$Month <- factor(data_month$Month, levels = c("July", "August", "September",
+                                                        "October", "November", "December",
+                                                        "January", "February", "March",
+                                                        "April", "May", "June", "July2"))
+data_month$item_no <- factor(data_month$item_no)
+```
+
+#add binary info
+```{r}
+data_month_bi <- data_month %>% mutate(sold_binary = case_when(sold > 0 ~ '1',
+                                                    TRUE ~ '0' ))
+
+data_month_bi$sold_binary <- as.numeric(data_month_bi$sold_binary)
+```
 
 
+```{r}
+data_wider <- data_month %>% pivot_wider(names_from = item_no,
+                                    values_from = sold)
+
+data_wider
+```
 
 
+#see overall trends across time
+```{r}
+ggplot(data = data_month, aes(x = Month,
+                             y = sold,
+                             color = item_no,
+                             fill = item_no)) +
+  geom_col() + 
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        legend.position = "none")
+```
+
+
+```{r}
+summary(data_month_bi)
+```
+
+
+#Split data
+
+```{r}
+#install.packages("caTools")
+library(caTools)
+set.seed(123)
+split_data <- sample.split(data_month_bi$sold, SplitRatio = 0.7)
+
+test_data <- subset(data_month_bi, split_data == FALSE)
+
+train_data <- subset(data_month_bi, split_data == TRUE)
+```
+
+
+#model 1
+```{r}
+fit <- glm(sold_binary ~ Month + item_no, data=train_data, family=binomial())
+
+summary(fit)
+```
+
+```{r}
+set.seed(123)
+split_data2 <- sample.split(data_month$sold, SplitRatio = 0.7)
+
+test_data2 <- subset(data_month, split_data2 == FALSE)
+
+train_data2 <- subset(data_month, split_data2 == TRUE)
+
+fit2 <- glm(sold ~ Month + item_no, data = train_data2)
+
+summary(fit2)
+```
+
+
+```{r}
+library(broom)
+
+model <- tidy(fit)
+options(scipen = 999)
+model
+```
+
+#get variables with p value less than 0.05
+```{r}
+sig <- subset(model, p.value < 0.05)
+print(sig, n = 114)
+```
+
+
+#predictions
+```{r}
+test_data$prob <- predict(fit, test_data, type="response")
+
+test_data$pred <- test_data %>% mutate(ifelse(prob > .75, "1", "0"))
+```
+
+```{r}
+accuracy <- mean(head(test_data$pred$`ifelse(prob > 0.75, "1", "0")`, 35) == head(test_data$sold_binary, 35))
+accuracy #77% accuracy
+```
+
+#predictions for fit2
+```{r}
+test_data2$prob <- predict(fit2, test_data2, type="response")
+
+test_data2$pred <- test_data2 %>% mutate(ifelse(prob > .75, "1", "0"))
+```
+
+```{r}
+accuracy2 <- mean(head(test_data2$pred$`ifelse(prob > 0.75, "1", "0")`, 35) == head(test_data2$sold, 35))
+```
+
+
+#what is our second model predicting at?
+```{r}
+accuracy2 #2% accuracy
+```
+
+*Our first model is predicting with 77% accuracy*
 
 ## Discussion & Reflection
+Mini competition 2 set the goal to create a model to complete the task of projecting a company’s sales of widgets and then communicate our findings to a general audience. In this example, we utilized a generalized linear model approach to accomplish this task and framed the output in terms of months of projected high sales. This way, the company was able to use our predictions to choose which widgets should be kept in excess stock during specific months. One of the main goals of this assignment was to intentionally frame the output and predictions in a manner that is easily digestible to people who are not formally trained in statistics. A challenge of this goal was to strike a balance between effective communication without condescension- this is often a critique which non-academics have with academia. 
+
+One problem with our approach to the generalized linear model was with our training and testing models. While we randomized the dataset and split our data into a 70:30 training and testing sets, this ignores the collinearity of the data. For example, it is possible that one widget over multiple months could have been selected for either the training or testing sets. To ensure an even separation of widgets, a better approach would have been to select by unique widget and then subset the data. 
 
 
 
