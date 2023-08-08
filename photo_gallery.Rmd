@@ -10,10 +10,6 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
-```{r fig.cap="Macrophyte survey in Muskegon Lake", out.extra="class=external"}
-knitr::include_graphics("images/Macrophyte year 4 NE and Heritage 029_sharpened.png")
-```
-
 ```{r fig.cap="Dreissena bugensis siphons", out.extra="class=external"}
 knitr::include_graphics("images/mussel_siphons.jpg")
 ```
