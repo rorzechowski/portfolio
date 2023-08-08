@@ -2,7 +2,10 @@
 title: "Current Projects"
 description: |
   A reflection of topics covered in STA 631 - Summer 2023
-output: distill::distill_article
+output: 
+  distill::distill_article:
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -77,9 +80,8 @@ library(tidyverse)
 raw_data <- read_csv("inventory.csv")
 ```
 
-
-#convert week data by month #easier for interpretation
 ```{r}
+#convert week data by month #easier for interpretation
 data_month <- raw_data %>% mutate(Month = case_when(week <= 4 ~ 'July',
                                                     week > 4 & week <= 8 ~ 'August',
                                                     week > 8 & week <= 12 ~ 'September',
@@ -101,8 +103,9 @@ data_month$Month <- factor(data_month$Month, levels = c("July", "August", "Septe
 data_month$item_no <- factor(data_month$item_no)
 ```
 
-#add binary info
+
 ```{r}
+#add binary info
 data_month_bi <- data_month %>% mutate(sold_binary = case_when(sold > 0 ~ '1',
                                                     TRUE ~ '0' ))
 
@@ -118,8 +121,9 @@ data_wider
 ```
 
 
-#see overall trends across time
+
 ```{r}
+#see overall trends across time
 ggplot(data = data_month, aes(x = Month,
                              y = sold,
                              color = item_no,
@@ -137,8 +141,6 @@ summary(data_month_bi)
 ```
 
 
-#Split data
-
 ```{r}
 #install.packages("caTools")
 library(caTools)
@@ -151,11 +153,10 @@ train_data <- subset(data_month_bi, split_data == TRUE)
 ```
 
 
-#model 1
-```{r}
-fit <- glm(sold_binary ~ Month + item_no, data=train_data, family=binomial())
 
-summary(fit)
+```{r}
+#model 1
+fit <- glm(sold_binary ~ Month + item_no, data=train_data, family=binomial())
 ```
 
 ```{r}
@@ -168,7 +169,6 @@ train_data2 <- subset(data_month, split_data2 == TRUE)
 
 fit2 <- glm(sold ~ Month + item_no, data = train_data2)
 
-summary(fit2)
 ```
 
 
@@ -180,39 +180,41 @@ options(scipen = 999)
 model
 ```
 
-#get variables with p value less than 0.05
 ```{r}
 sig <- subset(model, p.value < 0.05)
-print(sig, n = 114)
+print(sig, n = 10)
 ```
 
-
-#predictions
 ```{r}
+#predictions
 test_data$prob <- predict(fit, test_data, type="response")
 
 test_data$pred <- test_data %>% mutate(ifelse(prob > .75, "1", "0"))
 ```
 
 ```{r}
-accuracy <- mean(head(test_data$pred$`ifelse(prob > 0.75, "1", "0")`, 35) == head(test_data$sold_binary, 35))
+accuracy <- mean(head(test_data$pred$`ifelse(prob > 0.75, "1", "0")`, 35)
+                 == head(test_data$sold_binary, 35))
 accuracy #77% accuracy
 ```
 
-#predictions for fit2
+
 ```{r}
+#predictions for fit2
 test_data2$prob <- predict(fit2, test_data2, type="response")
 
 test_data2$pred <- test_data2 %>% mutate(ifelse(prob > .75, "1", "0"))
 ```
 
 ```{r}
-accuracy2 <- mean(head(test_data2$pred$`ifelse(prob > 0.75, "1", "0")`, 35) == head(test_data2$sold, 35))
+accuracy2 <- mean(head(test_data2$pred$`ifelse(prob > 0.75, "1", "0")`, 35)
+                  == head(test_data2$sold, 35))
 ```
 
 
-#what is our second model predicting at?
+
 ```{r}
+#what is our second model predicting at?
 accuracy2 #2% accuracy
 ```
 
@@ -230,35 +232,132 @@ One problem with our approach to the generalized linear model was with our train
 
 *From Mini Competition 1*
 
+```{r}
+library(tidyverse)
+library(broom)
+library(ggplot2)
+library(tidymodels)
+library(GGally)
+library(olsrr)
+```
+
+
+```{r}
+challenge_data <- readr::read_csv("2019_data.csv")
+```
+
+
+```{r creating variables vector}
+selected_vars <- c("FSSPORTX", "FSVOL", "FSMTNG", "FSPTMTNG", "FSFUNDRS", 
+                   "FSCOMMTE", "FSCOUNSLR", "FSFREQ","FSATCNFN", "FHCHECKX", 
+                   "FHHELP", "FHPLACE", "SCCHOICE", "SPUBCHOIX",  "SEGRADES", 
+                   "SCONSIDR")
+```
+
+
+```{r creating new dataset}
+#create a new data set
+new_data <- challenge_data[, selected_vars]
+```
+
+
+```{r selecting variable values}
+filtered_data <- new_data %>%
+  filter(if_all(c("FSSPORTX", "FSVOL", "FSMTNG", "FSPTMTNG", "FSFUNDRS",
+                  "FSCOMMTE","FSCOUNSLR","FSATCNFN", "FHPLACE", "SCCHOICE",
+                  "SCONSIDR", "SPUBCHOIX"), ~. %in% c(1, 2)))
+```
+
+
+```{r creating binary variables yes and no values}
+filtered_data2 <- filtered_data %>%
+  mutate(across(c("FSSPORTX", "FSVOL", "FSMTNG", "FSPTMTNG", "FSFUNDRS", 
+                  "FSCOMMTE", "FSCOUNSLR", "FSATCNFN", "FHPLACE", "SCCHOICE", 
+                  "SPUBCHOIX", "SCONSIDR"), ~ifelse(. == 1, "Yes", "No")))
+```
+
+```{r}
+filtered_data3 <- filtered_data2 %>%
+  mutate(FHHELP = case_when(
+    FHHELP %in% c(1, 2) ~ "few",  # Combine 1's and 2's into 1 (pass)
+    FHHELP %in% c(3, 4) ~ "many",   # Combine 3's and 4's into 0 (fail)
+    TRUE ~ NA_character_            # Set other values (including 5) to NA
+  )) %>%
+  filter(!is.na(FHHELP)) 
+```
+
+
+```{r}
+filtered_data4 <- filtered_data3 %>%
+  mutate(FHCHECKX = case_when(
+    FHCHECKX %in% c(1, 2) ~ "few",  # Combine 1's and 2's into 1 (pass)
+    FHCHECKX %in% c(3, 4) ~ "many",   # Combine 3's and 4's into 0 (fail)
+    TRUE ~ NA_character_            # Set other values (including 5) to NA
+  )) %>%
+  filter(!is.na(FHCHECKX)) 
+```
+
+```{r splitting data}
+## Splitting data into train and test and fitting the model
+# set seed before random split
+set.seed(40)
+# put 80% of the data into the training set
+data_split <- initial_split(filtered_data4, prop = 0.80)
+
+# assign the two splits to data frames - with descriptive names
+data_train <- training(data_split)
+data_test <- testing(data_split)
+
+# splits
+data_train
+```
+
+**Fitting the model**
+
+```{r fitting_initialmodel}
+#fit the mlr model
+lm_spec <- linear_reg() %>%
+set_mode("regression") %>%
+set_engine("lm")
+
+initial_model <- lm_spec %>% 
+fit(SEGRADES ~ FSSPORTX+FSVOL+FSMTNG+FSPTMTNG+FSATCNFN+FSFUNDRS+FSCOMMTE+
+      FSCOUNSLR+FSFREQ+SCCHOICE+SPUBCHOIX+FHCHECKX+FHHELP+FHPLACE+
+      FSMTNG*FHHELP+FSPTMTNG*FHHELP+SCONSIDR, data = data_train)
+
+stats<- tidy(initial_model)
+```
+
 **Final models**
-The final model chosen after the backward selection using p values was as shown below 
 ```{r}
 final_model1 <- lm_spec %>% 
-fit(SEGRADES ~ FSSPORTX+FSATCNFN+FHCHECKX+FHHELP+FSMTNG*FHHELP+FSMTNG+FSCOMMTE+SCCHOICE+FHPLACE, data = data_train)
+fit(SEGRADES ~ FSSPORTX+FSATCNFN+FHCHECKX+FHHELP+FSMTNG*FHHELP+FSMTNG+
+      FSCOMMTE+SCCHOICE+FHPLACE, data = data_train)
 
 tidy(final_model1)
 ```
 
-The final model chosen after the backward selection using AIC values was as shown below 
 
 ```{r}
+#final model chosen after the backward selection using AIC values
 final_model2 <- lm_spec %>% 
-fit(SEGRADES ~ FSSPORTX+FSATCNFN+FHCHECKX+FHHELP+FSMTNG*FHHELP+FSMTNG+FSCOMMTE+SCCHOICE+FHPLACE+FSFUNDRS, data = data_train)
+fit(SEGRADES ~ FSSPORTX+FSATCNFN+FHCHECKX+FHHELP+FSMTNG*FHHELP+FSMTNG+
+      FSCOMMTE+SCCHOICE+FHPLACE+FSFUNDRS, data = data_train)
 
- tidy(final_model2)
+tidy(final_model2)
 ```
 
-## Making  predictions and check for accuracy of predictions
 
-Using the two final models from the backward selection to make predictions on the test data and determine their accuracy on predicting student grades
 
 **final_model1**
 ```{r}
+## Making  predictions and check for accuracy of predictions
 predictions <- predict(final_model1, new_data = data_test)
 ```
 
-And then checked the accuracy of the  predictions
+
 ```{r}
+#check accuracy of the  predictions
 true_labels <- data_test$SEGRADES
 predictions_round <- round(predictions)# rounding to get whole numbers instea of decimals
 accuracy1 <- sum(predictions_round == true_labels) / length(true_labels)
@@ -266,13 +365,11 @@ accuracy1
 ```
 
 **final_model2**
-Using final model using backward selection and AIC to make predictions on the test data
 
 ```{r}
 predictions2 <- predict(final_model2, new_data = data_test)
 ```
 
-And then checked the accuracy of the  predictions
 ```{r}
 true_labels <- data_test$SEGRADES
 predictions2_round <- round(predictions2)
@@ -317,6 +414,3 @@ Additionally, seeing other groups present their information and how they approac
 Between the multiple assignments and mini competitions in this class, we used R for all analyses. I am constantly amazed at the growth in this language that I continue to develop during my studies. The books, videos, and lectures all taught me new skills in R and these are tools which I will take with me as my career progresses. The amount of effort in this course to succeed was self-driven. In my opinion, these topics are of the sort that one will continue to learn new ways to approach them, so the code that I write today will be very different from the code I write in the future. Additionally, working on the mini competitions with other people helped me see how other people attack a problem in R, starting with how the clean the data, organize their code, and make final interpretations. Reading other people's code helped me to realize how I struggle with comments in my own code and how I need to improve on that aspect. 
 
 Overall, this class was a lot to keep up with between readings, videos, and assignments, but I believe that I have the tools to continue my learning journey from here. I particularly enjoyed many of the in-class discussions with my peers - we all come from such different backgrounds in studies and life that it was insightful to hear different perspectives on various topics such as AI, data feminism, or career aspirations. Sometimes it's easy to feel alone on your own journey, so I think finding common ground among your peers is important and brings a sense of community into your life. 
-
-
-

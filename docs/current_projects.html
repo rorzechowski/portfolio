@@ -110,7 +110,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Current Projects"]},{"type":"character","attributes":{},"value":["A reflection of topics covered in STA 631 - Summer 2023\n"]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Current Projects"]},{"type":"character","attributes":{},"value":["A reflection of topics covered in STA 631 - Summer 2023\n"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2150,6 +2150,23 @@ Resources
 
 
 <div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#course-objective-1" id="toc-course-objective-1">Course Objective 1</a></li>
+<li><a href="#discussion-reflection" id="toc-discussion-reflection">Discussion &amp; Reflection</a></li>
+<li><a href="#course-objective-2" id="toc-course-objective-2">Course Objective 2</a></li>
+<li><a href="#discussion-reflection-1" id="toc-discussion-reflection-1">Discussion &amp; Reflection</a></li>
+<li><a href="#course-objective-3" id="toc-course-objective-3">Course Objective 3</a></li>
+<li><a href="#discussion-reflection-2" id="toc-discussion-reflection-2">Discussion &amp; Reflection</a></li>
+<li><a href="#course-objective-4" id="toc-course-objective-4">Course Objective 4</a></li>
+<li><a href="#discussion-reflection-3" id="toc-discussion-reflection-3">Discussion &amp; Reflection</a></li>
+<li><a href="#course-objective-5" id="toc-course-objective-5">Course Objective 5</a></li>
+<li><a href="#discussion-reflection-4" id="toc-discussion-reflection-4">Discussion &amp; Reflection</a></li>
+</ul>
+</nav>
+</div>
 <h2 id="course-objective-1">Course Objective 1</h2>
 <h4 id="describe-probability-as-a-foundation-of-statistical-modeling-including-inference-and-maximum-likelihood-estimation">Describe probability as a foundation of statistical modeling, including inference and maximum likelihood estimation</h4>
 <p><em>From Activity 6 - Logistic Regression</em></p>
@@ -2238,23 +2255,460 @@ Resources
 <h2 id="course-objective-2">Course Objective 2</h2>
 <h4 id="determine-and-apply-the-appropriate-generalized-linear-model-for-a-specific-data-context">Determine and apply the appropriate generalized linear model for a specific data context</h4>
 <p><em>From Mini Competition 2</em></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='va'>raw_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"inventory.csv"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#convert week data by month #easier for interpretation</span></span>
+<span><span class='va'>data_month</span> <span class='op'>&lt;-</span> <span class='va'>raw_data</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Month <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span><span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>4</span> <span class='op'>~</span> <span class='st'>'July'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>4</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>8</span> <span class='op'>~</span> <span class='st'>'August'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>8</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>12</span> <span class='op'>~</span> <span class='st'>'September'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>12</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>16</span> <span class='op'>~</span> <span class='st'>'October'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>16</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>20</span> <span class='op'>~</span> <span class='st'>'November'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>20</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>24</span> <span class='op'>~</span> <span class='st'>'December'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>24</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>28</span> <span class='op'>~</span> <span class='st'>'January'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>28</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>32</span> <span class='op'>~</span> <span class='st'>'February'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>32</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>37</span> <span class='op'>~</span> <span class='st'>'March'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>37</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>41</span> <span class='op'>~</span> <span class='st'>'April'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>41</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>45</span> <span class='op'>~</span> <span class='st'>'May'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>45</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>50</span> <span class='op'>~</span> <span class='st'>'June'</span>,</span>
+<span>                                                    <span class='va'>week</span> <span class='op'>&gt;</span> <span class='fl'>50</span> <span class='op'>&amp;</span> <span class='va'>week</span> <span class='op'>&lt;=</span> <span class='fl'>53</span> <span class='op'>~</span> <span class='st'>'July2'</span>,<span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>data_month</span><span class='op'>$</span><span class='va'>Month</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>data_month</span><span class='op'>$</span><span class='va'>Month</span>, levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"July"</span>, <span class='st'>"August"</span>, <span class='st'>"September"</span>,</span>
+<span>                                                        <span class='st'>"October"</span>, <span class='st'>"November"</span>, <span class='st'>"December"</span>,</span>
+<span>                                                        <span class='st'>"January"</span>, <span class='st'>"February"</span>, <span class='st'>"March"</span>,</span>
+<span>                                                        <span class='st'>"April"</span>, <span class='st'>"May"</span>, <span class='st'>"June"</span>, <span class='st'>"July2"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>data_month</span><span class='op'>$</span><span class='va'>item_no</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>data_month</span><span class='op'>$</span><span class='va'>item_no</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#add binary info</span></span>
+<span><span class='va'>data_month_bi</span> <span class='op'>&lt;-</span> <span class='va'>data_month</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>sold_binary <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span><span class='va'>sold</span> <span class='op'>&gt;</span> <span class='fl'>0</span> <span class='op'>~</span> <span class='st'>'1'</span>,</span>
+<span>                                                    <span class='cn'>TRUE</span> <span class='op'>~</span> <span class='st'>'0'</span> <span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>data_month_bi</span><span class='op'>$</span><span class='va'>sold_binary</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>data_month_bi</span><span class='op'>$</span><span class='va'>sold_binary</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>data_wider</span> <span class='op'>&lt;-</span> <span class='va'>data_month</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>item_no</span>,</span>
+<span>                                    values_from <span class='op'>=</span> <span class='va'>sold</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>data_wider</span></span></code></pre>
+</div>
+<pre><code># A tibble: 54 × 490
+    week Month   `020-307` `020-502` `025-207` `02FR182024` `04002032`
+   &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+ 1     0 July            0         0         0            0          0
+ 2     1 July           80         0       100            0          0
+ 3     2 July            0         0         0            0          0
+ 4     3 July            0         0         0            0        284
+ 5     4 July            0        84         0            0         88
+ 6     5 August          0         0         0            0        440
+ 7     6 August          0         0         0            0         60
+ 8     7 August          0        84         0            0         75
+ 9     8 August         80         0       100            0          0
+10     9 Septem…         0         0         0            0          0
+# ℹ 44 more rows
+# ℹ 483 more variables: `04120002` &lt;dbl&gt;, `0822203` &lt;dbl&gt;,
+#   `10055.011010` &lt;dbl&gt;, `10055.011020` &lt;dbl&gt;, `10055.011212` &lt;dbl&gt;,
+#   `10055.011220` &lt;dbl&gt;, `10055.011224` &lt;dbl&gt;, `10055.011420` &lt;dbl&gt;,
+#   `10055.011425` &lt;dbl&gt;, `10055.011616` &lt;dbl&gt;, `10055.011620` &lt;dbl&gt;,
+#   `10055.011624` &lt;dbl&gt;, `10055.011625` &lt;dbl&gt;, `10055.011820` &lt;dbl&gt;,
+#   `10055.012020` &lt;dbl&gt;, `10055.012025` &lt;dbl&gt;, …</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#see overall trends across time</span></span>
+<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>data_month</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Month</span>,</span>
+<span>                             y <span class='op'>=</span> <span class='va'>sold</span>,</span>
+<span>                             color <span class='op'>=</span> <span class='va'>item_no</span>,</span>
+<span>                             fill <span class='op'>=</span> <span class='va'>item_no</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>panel.grid.major <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>, </span>
+<span>        panel.grid.minor <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>, </span>
+<span>        legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="current_projects_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>data_month_bi</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>       item_no           week           sold        
+ 020-307   :   54   Min.   : 0.0   Min.   :   0.00  
+ 020-502   :   54   1st Qu.:13.0   1st Qu.:   0.00  
+ 025-207   :   54   Median :26.5   Median :   0.00  
+ 02FR182024:   54   Mean   :26.5   Mean   :  50.62  
+ 04002032  :   54   3rd Qu.:40.0   3rd Qu.:   2.00  
+ 04120002  :   54   Max.   :53.0   Max.   :7200.00  
+ (Other)   :26028                                   
+       Month        sold_binary    
+ July     : 2440   Min.   :0.0000  
+ March    : 2440   1st Qu.:0.0000  
+ June     : 2440   Median :0.0000  
+ August   : 1952   Mean   :0.2516  
+ September: 1952   3rd Qu.:1.0000  
+ October  : 1952   Max.   :1.0000  
+ (Other)  :13176                   </code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#install.packages("caTools")</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>caTools</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span></span>
+<span><span class='va'>split_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caTools/man/sample.split.html'>sample.split</a></span><span class='op'>(</span><span class='va'>data_month_bi</span><span class='op'>$</span><span class='va'>sold</span>, SplitRatio <span class='op'>=</span> <span class='fl'>0.7</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>test_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data_month_bi</span>, <span class='va'>split_data</span> <span class='op'>==</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>train_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data_month_bi</span>, <span class='va'>split_data</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#model 1</span></span>
+<span><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>sold_binary</span> <span class='op'>~</span> <span class='va'>Month</span> <span class='op'>+</span> <span class='va'>item_no</span>, data<span class='op'>=</span><span class='va'>train_data</span>, family<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span></span>
+<span><span class='va'>split_data2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caTools/man/sample.split.html'>sample.split</a></span><span class='op'>(</span><span class='va'>data_month</span><span class='op'>$</span><span class='va'>sold</span>, SplitRatio <span class='op'>=</span> <span class='fl'>0.7</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>test_data2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data_month</span>, <span class='va'>split_data2</span> <span class='op'>==</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>train_data2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data_month</span>, <span class='va'>split_data2</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>sold</span> <span class='op'>~</span> <span class='va'>Month</span> <span class='op'>+</span> <span class='va'>item_no</span>, data <span class='op'>=</span> <span class='va'>train_data2</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>scipen <span class='op'>=</span> <span class='fl'>999</span><span class='op'>)</span></span>
+<span><span class='va'>model</span></span></code></pre>
+</div>
+<pre><code># A tibble: 500 × 5
+   term           estimate std.error statistic  p.value
+   &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 (Intercept)     -1.43      0.425     -3.35  0.000796
+ 2 MonthAugust      0.135     0.0986     1.37  0.170   
+ 3 MonthSeptember  -0.121     0.101     -1.20  0.232   
+ 4 MonthOctober    -0.0883    0.101     -0.875 0.382   
+ 5 MonthNovember    0.132     0.0986     1.34  0.180   
+ 6 MonthDecember   -0.317     0.104     -3.03  0.00244 
+ 7 MonthJanuary     0.122     0.0989     1.23  0.217   
+ 8 MonthFebruary    0.0330    0.0986     0.335 0.738   
+ 9 MonthMarch       0.151     0.0929     1.63  0.103   
+10 MonthApril      -0.124     0.101     -1.22  0.222   
+# ℹ 490 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>sig</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>p.value</span> <span class='op'>&lt;</span> <span class='fl'>0.05</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>sig</span>, n <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code># A tibble: 114 × 5
+   term                estimate std.error statistic    p.value
+   &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+ 1 (Intercept)           -1.43     0.425      -3.35 0.000796  
+ 2 MonthDecember         -0.317    0.104      -3.03 0.00244   
+ 3 MonthJune             -0.284    0.0971     -2.93 0.00339   
+ 4 item_no02FR182024     -2.20     1.10       -2.01 0.0449    
+ 5 item_no10055.011010    2.07     0.536       3.86 0.000113  
+ 6 item_no10055.011620    2.48     0.560       4.43 0.00000957
+ 7 item_no10055.011625    1.54     0.518       2.98 0.00288   
+ 8 item_no10055.012020    1.69     0.545       3.10 0.00193   
+ 9 item_no10055.012025    1.71     0.526       3.24 0.00118   
+10 item_no10055.021625    1.43     0.535       2.67 0.00765   
+# ℹ 104 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#predictions</span></span>
+<span><span class='va'>test_data</span><span class='op'>$</span><span class='va'>prob</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span>, <span class='va'>test_data</span>, type<span class='op'>=</span><span class='st'>"response"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>test_data</span><span class='op'>$</span><span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='va'>test_data</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>prob</span> <span class='op'>&gt;</span> <span class='fl'>.75</span>, <span class='st'>"1"</span>, <span class='st'>"0"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>accuracy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>test_data</span><span class='op'>$</span><span class='va'>pred</span><span class='op'>$</span><span class='va'>`ifelse(prob &gt; 0.75, "1", "0")`</span>, <span class='fl'>35</span><span class='op'>)</span></span>
+<span>                 <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>test_data</span><span class='op'>$</span><span class='va'>sold_binary</span>, <span class='fl'>35</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>accuracy</span> <span class='co'>#77% accuracy</span></span></code></pre>
+</div>
+<pre><code>[1] 0.7714286</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#predictions for fit2</span></span>
+<span><span class='va'>test_data2</span><span class='op'>$</span><span class='va'>prob</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit2</span>, <span class='va'>test_data2</span>, type<span class='op'>=</span><span class='st'>"response"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>test_data2</span><span class='op'>$</span><span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='va'>test_data2</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>prob</span> <span class='op'>&gt;</span> <span class='fl'>.75</span>, <span class='st'>"1"</span>, <span class='st'>"0"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>accuracy2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>test_data2</span><span class='op'>$</span><span class='va'>pred</span><span class='op'>$</span><span class='va'>`ifelse(prob &gt; 0.75, "1", "0")`</span>, <span class='fl'>35</span><span class='op'>)</span></span>
+<span>                  <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>test_data2</span><span class='op'>$</span><span class='va'>sold</span>, <span class='fl'>35</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#what is our second model predicting at?</span></span>
+<span><span class='va'>accuracy2</span> <span class='co'>#2% accuracy</span></span></code></pre>
+</div>
+<pre><code>[1] 0.02857143</code></pre>
+</div>
+<p><em>Our first model is predicting with 77% accuracy</em></p>
 <h2 id="discussion-reflection-1">Discussion &amp; Reflection</h2>
+<p>Mini competition 2 set the goal to create a model to complete the task of projecting a company’s sales of widgets and then communicate our findings to a general audience. In this example, we utilized a generalized linear model approach to accomplish this task and framed the output in terms of months of projected high sales. This way, the company was able to use our predictions to choose which widgets should be kept in excess stock during specific months. One of the main goals of this assignment was to intentionally frame the output and predictions in a manner that is easily digestible to people who are not formally trained in statistics. A challenge of this goal was to strike a balance between effective communication without condescension- this is often a critique which non-academics have with academia.</p>
+<p>One problem with our approach to the generalized linear model was with our training and testing models. While we randomized the dataset and split our data into a 70:30 training and testing sets, this ignores the collinearity of the data. For example, it is possible that one widget over multiple months could have been selected for either the training or testing sets. To ensure an even separation of widgets, a better approach would have been to select by unique widget and then subset the data. This project stretched my thinking about a problem, not only in what approach to use, but also how to effectively communicate the findings to a general audience</p>
 <hr />
 <h2 id="course-objective-3">Course Objective 3</h2>
 <h4 id="conduct-model-selection-for-a-set-of-candidate-models">Conduct model selection for a set of candidate models</h4>
 <p><em>From Mini Competition 1</em></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidymodels.tidymodels.org'>tidymodels</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggobi.github.io/ggally/'>GGally</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://olsrr.rsquaredacademy.com/'>olsrr</a></span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>challenge_data</span> <span class='op'>&lt;-</span> <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"2019_data.csv"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>selected_vars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FSSPORTX"</span>, <span class='st'>"FSVOL"</span>, <span class='st'>"FSMTNG"</span>, <span class='st'>"FSPTMTNG"</span>, <span class='st'>"FSFUNDRS"</span>, </span>
+<span>                   <span class='st'>"FSCOMMTE"</span>, <span class='st'>"FSCOUNSLR"</span>, <span class='st'>"FSFREQ"</span>,<span class='st'>"FSATCNFN"</span>, <span class='st'>"FHCHECKX"</span>, </span>
+<span>                   <span class='st'>"FHHELP"</span>, <span class='st'>"FHPLACE"</span>, <span class='st'>"SCCHOICE"</span>, <span class='st'>"SPUBCHOIX"</span>,  <span class='st'>"SEGRADES"</span>, </span>
+<span>                   <span class='st'>"SCONSIDR"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#create a new data set</span></span>
+<span><span class='va'>new_data</span> <span class='op'>&lt;-</span> <span class='va'>challenge_data</span><span class='op'>[</span>, <span class='va'>selected_vars</span><span class='op'>]</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>filtered_data</span> <span class='op'>&lt;-</span> <span class='va'>new_data</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>if_all</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FSSPORTX"</span>, <span class='st'>"FSVOL"</span>, <span class='st'>"FSMTNG"</span>, <span class='st'>"FSPTMTNG"</span>, <span class='st'>"FSFUNDRS"</span>,</span>
+<span>                  <span class='st'>"FSCOMMTE"</span>,<span class='st'>"FSCOUNSLR"</span>,<span class='st'>"FSATCNFN"</span>, <span class='st'>"FHPLACE"</span>, <span class='st'>"SCCHOICE"</span>,</span>
+<span>                  <span class='st'>"SCONSIDR"</span>, <span class='st'>"SPUBCHOIX"</span><span class='op'>)</span>, <span class='op'>~</span><span class='va'>.</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>filtered_data2</span> <span class='op'>&lt;-</span> <span class='va'>filtered_data</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FSSPORTX"</span>, <span class='st'>"FSVOL"</span>, <span class='st'>"FSMTNG"</span>, <span class='st'>"FSPTMTNG"</span>, <span class='st'>"FSFUNDRS"</span>, </span>
+<span>                  <span class='st'>"FSCOMMTE"</span>, <span class='st'>"FSCOUNSLR"</span>, <span class='st'>"FSATCNFN"</span>, <span class='st'>"FHPLACE"</span>, <span class='st'>"SCCHOICE"</span>, </span>
+<span>                  <span class='st'>"SPUBCHOIX"</span>, <span class='st'>"SCONSIDR"</span><span class='op'>)</span>, <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>.</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='st'>"Yes"</span>, <span class='st'>"No"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>filtered_data3</span> <span class='op'>&lt;-</span> <span class='va'>filtered_data2</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FHHELP <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
+<span>    <span class='va'>FHHELP</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"few"</span>,  <span class='co'># Combine 1's and 2's into 1 (pass)</span></span>
+<span>    <span class='va'>FHHELP</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"many"</span>,   <span class='co'># Combine 3's and 4's into 0 (fail)</span></span>
+<span>    <span class='cn'>TRUE</span> <span class='op'>~</span> <span class='cn'>NA_character_</span>            <span class='co'># Set other values (including 5) to NA</span></span>
+<span>  <span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>FHHELP</span><span class='op'>)</span><span class='op'>)</span> </span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>filtered_data4</span> <span class='op'>&lt;-</span> <span class='va'>filtered_data3</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>FHCHECKX <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
+<span>    <span class='va'>FHCHECKX</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"few"</span>,  <span class='co'># Combine 1's and 2's into 1 (pass)</span></span>
+<span>    <span class='va'>FHCHECKX</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"many"</span>,   <span class='co'># Combine 3's and 4's into 0 (fail)</span></span>
+<span>    <span class='cn'>TRUE</span> <span class='op'>~</span> <span class='cn'>NA_character_</span>            <span class='co'># Set other values (including 5) to NA</span></span>
+<span>  <span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>FHCHECKX</span><span class='op'>)</span><span class='op'>)</span> </span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## Splitting data into train and test and fitting the model</span></span>
+<span><span class='co'># set seed before random split</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>40</span><span class='op'>)</span></span>
+<span><span class='co'># put 80% of the data into the training set</span></span>
+<span><span class='va'>data_split</span> <span class='op'>&lt;-</span> <span class='fu'>initial_split</span><span class='op'>(</span><span class='va'>filtered_data4</span>, prop <span class='op'>=</span> <span class='fl'>0.80</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'># assign the two splits to data frames - with descriptive names</span></span>
+<span><span class='va'>data_train</span> <span class='op'>&lt;-</span> <span class='fu'>training</span><span class='op'>(</span><span class='va'>data_split</span><span class='op'>)</span></span>
+<span><span class='va'>data_test</span> <span class='op'>&lt;-</span> <span class='fu'>testing</span><span class='op'>(</span><span class='va'>data_split</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'># splits</span></span>
+<span><span class='va'>data_train</span></span></code></pre>
+</div>
+<pre><code># A tibble: 7,407 × 16
+   FSSPORTX FSVOL FSMTNG FSPTMTNG FSFUNDRS FSCOMMTE FSCOUNSLR FSFREQ
+   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
+ 1 Yes      No    Yes    Yes      Yes      No       No            20
+ 2 Yes      Yes   Yes    Yes      Yes      Yes      Yes            8
+ 3 Yes      No    Yes    No       Yes      No       Yes            5
+ 4 Yes      Yes   Yes    Yes      Yes      No       Yes           10
+ 5 Yes      No    Yes    Yes      Yes      No       Yes            3
+ 6 Yes      Yes   Yes    Yes      Yes      Yes      Yes           10
+ 7 Yes      No    Yes    Yes      Yes      No       No             1
+ 8 No       No    No     No       No       No       No             2
+ 9 No       No    No     Yes      No       No       No             1
+10 Yes      Yes   Yes    Yes      Yes      Yes      No            14
+# ℹ 7,397 more rows
+# ℹ 8 more variables: FSATCNFN &lt;chr&gt;, FHCHECKX &lt;chr&gt;, FHHELP &lt;chr&gt;,
+#   FHPLACE &lt;chr&gt;, SCCHOICE &lt;chr&gt;, SPUBCHOIX &lt;chr&gt;, SEGRADES &lt;dbl&gt;,
+#   SCONSIDR &lt;chr&gt;</code></pre>
+</div>
+<p><strong>Fitting the model</strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#fit the mlr model</span></span>
+<span><span class='va'>lm_spec</span> <span class='op'>&lt;-</span> <span class='fu'>linear_reg</span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span><span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span><span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"lm"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>initial_model</span> <span class='op'>&lt;-</span> <span class='va'>lm_spec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span><span class='fu'>fit</span><span class='op'>(</span><span class='va'>SEGRADES</span> <span class='op'>~</span> <span class='va'>FSSPORTX</span><span class='op'>+</span><span class='va'>FSVOL</span><span class='op'>+</span><span class='va'>FSMTNG</span><span class='op'>+</span><span class='va'>FSPTMTNG</span><span class='op'>+</span><span class='va'>FSATCNFN</span><span class='op'>+</span><span class='va'>FSFUNDRS</span><span class='op'>+</span><span class='va'>FSCOMMTE</span><span class='op'>+</span></span>
+<span>      <span class='va'>FSCOUNSLR</span><span class='op'>+</span><span class='va'>FSFREQ</span><span class='op'>+</span><span class='va'>SCCHOICE</span><span class='op'>+</span><span class='va'>SPUBCHOIX</span><span class='op'>+</span><span class='va'>FHCHECKX</span><span class='op'>+</span><span class='va'>FHHELP</span><span class='op'>+</span><span class='va'>FHPLACE</span><span class='op'>+</span></span>
+<span>      <span class='va'>FSMTNG</span><span class='op'>*</span><span class='va'>FHHELP</span><span class='op'>+</span><span class='va'>FSPTMTNG</span><span class='op'>*</span><span class='va'>FHHELP</span><span class='op'>+</span><span class='va'>SCONSIDR</span>, data <span class='op'>=</span> <span class='va'>data_train</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>stats</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>initial_model</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<strong>Final models</strong>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>final_model1</span> <span class='op'>&lt;-</span> <span class='va'>lm_spec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span><span class='fu'>fit</span><span class='op'>(</span><span class='va'>SEGRADES</span> <span class='op'>~</span> <span class='va'>FSSPORTX</span><span class='op'>+</span><span class='va'>FSATCNFN</span><span class='op'>+</span><span class='va'>FHCHECKX</span><span class='op'>+</span><span class='va'>FHHELP</span><span class='op'>+</span><span class='va'>FSMTNG</span><span class='op'>*</span><span class='va'>FHHELP</span><span class='op'>+</span><span class='va'>FSMTNG</span><span class='op'>+</span></span>
+<span>      <span class='va'>FSCOMMTE</span><span class='op'>+</span><span class='va'>SCCHOICE</span><span class='op'>+</span><span class='va'>FHPLACE</span>, data <span class='op'>=</span> <span class='va'>data_train</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>final_model1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code># A tibble: 10 × 5
+   term                 estimate std.error statistic   p.value
+   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept)            1.81      0.0776    23.3   1.15e-115
+ 2 FSSPORTXYes           -0.170     0.0415    -4.09  4.44e-  5
+ 3 FSATCNFNYes            0.410     0.0365    11.2   4.40e- 29
+ 4 FHCHECKXmany           0.425     0.0480     8.84  1.16e- 18
+ 5 FHHELPmany             0.0912    0.102      0.895 3.71e-  1
+ 6 FSMTNGYes             -0.261     0.0569    -4.58  4.66e-  6
+ 7 FSCOMMTEYes           -0.178     0.0429    -4.14  3.55e-  5
+ 8 SCCHOICEYes           -0.0986    0.0308    -3.20  1.38e-  3
+ 9 FHPLACEYes            -0.207     0.0441    -4.69  2.76e-  6
+10 FHHELPmany:FSMTNGYes   0.232     0.107      2.18  2.96e-  2</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#final model chosen after the backward selection using AIC values</span></span>
+<span><span class='va'>final_model2</span> <span class='op'>&lt;-</span> <span class='va'>lm_spec</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span><span class='fu'>fit</span><span class='op'>(</span><span class='va'>SEGRADES</span> <span class='op'>~</span> <span class='va'>FSSPORTX</span><span class='op'>+</span><span class='va'>FSATCNFN</span><span class='op'>+</span><span class='va'>FHCHECKX</span><span class='op'>+</span><span class='va'>FHHELP</span><span class='op'>+</span><span class='va'>FSMTNG</span><span class='op'>*</span><span class='va'>FHHELP</span><span class='op'>+</span><span class='va'>FSMTNG</span><span class='op'>+</span></span>
+<span>      <span class='va'>FSCOMMTE</span><span class='op'>+</span><span class='va'>SCCHOICE</span><span class='op'>+</span><span class='va'>FHPLACE</span><span class='op'>+</span><span class='va'>FSFUNDRS</span>, data <span class='op'>=</span> <span class='va'>data_train</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>final_model2</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code># A tibble: 11 × 5
+   term                 estimate std.error statistic   p.value
+   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept)            1.81      0.0776    23.3   6.23e-116
+ 2 FSSPORTXYes           -0.153     0.0425    -3.60  3.19e-  4
+ 3 FSATCNFNYes            0.415     0.0366    11.4   1.25e- 29
+ 4 FHCHECKXmany           0.424     0.0480     8.84  1.19e- 18
+ 5 FHHELPmany             0.0941    0.102      0.924 3.56e-  1
+ 6 FSMTNGYes             -0.248     0.0574    -4.32  1.60e-  5
+ 7 FSCOMMTEYes           -0.162     0.0438    -3.69  2.24e-  4
+ 8 SCCHOICEYes           -0.0963    0.0308    -3.13  1.78e-  3
+ 9 FHPLACEYes            -0.204     0.0441    -4.64  3.62e-  6
+10 FSFUNDRSYes           -0.0608    0.0331    -1.84  6.59e-  2
+11 FHHELPmany:FSMTNGYes   0.231     0.107      2.17  3.00e-  2</code></pre>
+</div>
+<strong>final_model1</strong>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## Making  predictions and check for accuracy of predictions</span></span>
+<span><span class='va'>predictions</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>final_model1</span>, new_data <span class='op'>=</span> <span class='va'>data_test</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#check accuracy of the  predictions</span></span>
+<span><span class='va'>true_labels</span> <span class='op'>&lt;-</span> <span class='va'>data_test</span><span class='op'>$</span><span class='va'>SEGRADES</span></span>
+<span><span class='va'>predictions_round</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>predictions</span><span class='op'>)</span><span class='co'># rounding to get whole numbers instea of decimals</span></span>
+<span><span class='va'>accuracy1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>predictions_round</span> <span class='op'>==</span> <span class='va'>true_labels</span><span class='op'>)</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>true_labels</span><span class='op'>)</span></span>
+<span><span class='va'>accuracy1</span></span></code></pre>
+</div>
+<pre><code>[1] 0.3439525</code></pre>
+</div>
+<p><strong>final_model2</strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>predictions2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>final_model2</span>, new_data <span class='op'>=</span> <span class='va'>data_test</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>true_labels</span> <span class='op'>&lt;-</span> <span class='va'>data_test</span><span class='op'>$</span><span class='va'>SEGRADES</span></span>
+<span><span class='va'>predictions2_round</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>predictions2</span><span class='op'>)</span></span>
+<span><span class='va'>accuracy2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>predictions2_round</span> <span class='op'>==</span> <span class='va'>true_labels</span><span class='op'>)</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>true_labels</span><span class='op'>)</span></span>
+<span><span class='va'>accuracy2</span></span></code></pre>
+</div>
+<pre><code>[1] 0.3363931</code></pre>
+</div>
 <h2 id="discussion-reflection-2">Discussion &amp; Reflection</h2>
 <hr />
 <h2 id="course-objective-4">Course Objective 4</h2>
 <h4 id="communicate-the-results-of-statistical-models-to-a-general-audience">Communicate the results of statistical models to a general audience</h4>
 <p><em>From Mini Competition 2 - see code above</em></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/include_graphics.html'>include_graphics</a></span><span class='op'>(</span><span class='st'>"images/comp2_graph.jpg"</span><span class='op'>)</span></span></code></pre>
+</div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-29"></span>
+<img src="images/comp2_graph.jpg" alt="Graph illustrating predictions in sales" class=external />
+<p class="caption">
+Figure 1: Graph illustrating predictions in sales
+</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/include_graphics.html'>include_graphics</a></span><span class='op'>(</span><span class='st'>"images/comp2.jpg"</span><span class='op'>)</span></span></code></pre>
+</div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-30"></span>
+<img src="images/comp2.jpg" alt="Communicating findings to our audience" class=external />
+<p class="caption">
+Figure 2: Communicating findings to our audience
+</p>
+</div>
+</div>
 <h2 id="discussion-reflection-3">Discussion &amp; Reflection</h2>
+<p>As mentioned above, a main goal of this project was to use a model to predict sales of products, then communicate those predictions to a general audience. While I was not the one to give the presentation, I did play a major role in the development of the models as well as creating the presentation. It was difficult to find a balance between effectively and accurately communicating what was done, why it was done, and how it was done in a manner that makes sense to non-statisticians. This is something that I know I struggle with, as I tend to drone and give too many unimportant details when storytelling. Working on this assignment in a group helped me to see the level of effective communication that can occur, even with complicated topics.</p>
+<p>Additionally, seeing other groups present their information and how they approached the assignment was equally insightful. One group in particular, I recall had the most visually impactful presentation and looked incredibly professional. I felt that they did a great job communicating their work in an effective way, without diminishing their own efforts or demeaning their audience.</p>
 <hr />
 <h2 id="course-objective-5">Course Objective 5</h2>
 <h4 id="use-programming-software-i.e.-r-to-fit-and-assess-statistical-models">Use programming software (i.e., R) to fit and assess statistical models</h4>
 <p><em>See above for examples of R code</em></p>
 <h2 id="discussion-reflection-4">Discussion &amp; Reflection</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Between the multiple assignments and mini competitions in this class, we used R for all analyses. I am constantly amazed at the growth in this language that I continue to develop during my studies. The books, videos, and lectures all taught me new skills in R and these are tools which I will take with me as my career progresses. The amount of effort in this course to succeed was self-driven. In my opinion, these topics are of the sort that one will continue to learn new ways to approach them, so the code that I write today will be very different from the code I write in the future. Additionally, working on the mini competitions with other people helped me see how other people attack a problem in R, starting with how the clean the data, organize their code, and make final interpretations. Reading other people’s code helped me to realize how I struggle with comments in my own code and how I need to improve on that aspect.</p>
+<p>Overall, this class was a lot to keep up with between readings, videos, and assignments, but I believe that I have the tools to continue my learning journey from here. I particularly enjoyed many of the in-class discussions with my peers - we all come from such different backgrounds in studies and life that it was insightful to hear different perspectives on various topics such as AI, data feminism, or career aspirations. Sometimes it’s easy to feel alone on your own journey, so I think finding common ground among your peers is important and brings a sense of community into your life.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
