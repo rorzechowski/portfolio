@@ -63,10 +63,9 @@ odds_callback
 
 ## Discussion & Reflection
 
+The logistic regression assignment was a good way to learn about probability, odds, and the roll they play while building models. In this assignment, we analyzed at a data set that looked at the influence of race and gender on the probability of a person receiving a callback after a job interview solely based on their name. We saw that, despite many of the candidates having very good credentials (i.e. a high number of years of experience), that there were a very low number of callbacks given to anyone. When we further looked at black individuals, we saw that the callback probability decreased even more. 
 
-
-
-
+I thought that this data set was enlightening in a few ways. One, that you may disproportionately not be given a job opportunity solely based on your name and its perception of race or gender to another person. That level of discrimination, while illegal, does still occur as revealed by this study. As a female, that knowledge is disheartening. I can't even image what a person of color might experience. I think it's important to acknowledge your own biases and actively work to avoid them. This data set, in a roundabout way, helped me to think about that in a more present sense. 
 
 ---
 
@@ -379,7 +378,9 @@ accuracy2
 
 ## Discussion & Reflection
 
+The goal of the first mini competition was to try and assess which factors contribute to a students' academic success. We were given a very large data set and a big challenge was to pare down which factors to even use in the model. We used a backward selection model to help with this process and had several iterations of our model run. We then compared the accuracy of a few of the final models and chose the model with the highest accuracy (which was still only 34%). 
 
+One challenge with this assignment was the code itself. Since I was the one presenting, I needed to go over and make sure that the code was correctly written and the models ran as expected. One thing I learned to appreciate was how each person tackles a given problem differently than how I would initially approach it, and we are all different when it comes to code organization. Reading another person's code and needing to make changes to it when necessary really helped my own debugging skills and shed light on the necessity for comments. Overall, it was a fun but challenging assignment.
 
 ---
 
